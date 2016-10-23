@@ -1,0 +1,34 @@
+<?php
+
+/* Create An Array To Load The Category And Sub Category */
+
+
+$_category          = $this->getCurrentCategory();
+$_child_category    = $_category->getChildren();
+$catIds                 = explode(',',$_child_category);$categories = array();foreach($catIds as $catId) {
+$category = Mage::getModel('catalog/category')->load($catId);
+$categories[$category->getName()] = array(
+'url' => $category->getUrl(),
+'img' => $category->getImageUrl()
+);
+}
+?>
+
+<?php if($category->getIsActive()): ?>
+
+<?php foreach($categories as $name => $data): ?>
+
+<p>
+
+/* Display Images And Product Descriptions */ 
+
+<a href="<?php echo $data['url']; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>">
+<img src="<?php echo $data['img']; ?>" />
+<div><?php echo $name; ?></div>
+
+</a>
+</p>
+
+<?php endforeach; ?>
+
+<?php endif; ?>
